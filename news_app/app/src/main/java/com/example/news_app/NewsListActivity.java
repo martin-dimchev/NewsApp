@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -36,7 +37,7 @@ public class NewsListActivity extends AppCompatActivity {
         category = intent.getStringExtra("category");
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        newsAdapter = new NewsAdapter();
+        newsAdapter = new NewsAdapter(this, new ArrayList<>());
         recyclerView.setAdapter(newsAdapter);
 
         loadNews(category);

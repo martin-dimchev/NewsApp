@@ -7,6 +7,13 @@
     android:layout_marginBottom="8dp"
     android:background="?android:attr/selectableItemBackground">
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginBottom="8dp"
+        android:scaleType="centerCrop" />
+
     <TextView
         android:id="@+id/newsTitle"
         android:layout_width="match_parent"
@@ -16,6 +23,7 @@
         android:textStyle="bold"
         android:layout_marginBottom="8dp"/>
 
+    <!-- Description of the news article -->
     <TextView
         android:id="@+id/newsDescription"
         android:layout_width="match_parent"
@@ -24,3 +32,4 @@
         android:textSize="14sp"
         android:textColor="#666666"/>
 </LinearLayout>
+
