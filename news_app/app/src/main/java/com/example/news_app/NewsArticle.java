@@ -9,7 +9,7 @@ public class NewsArticle {
     private String publishedAt;
     private String content;
 
-    public NewsArticle(String title, String description, String urlToImage, String url, String publishedAt) {
+    public NewsArticle(String title, String description, String content, String urlToImage, String url, String publishedAt) {
         this.title = title;
         this.description = description;
         this.urlToImage = urlToImage;
