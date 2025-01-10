@@ -7,6 +7,7 @@ public class NewsArticle {
     private String urlToImage;
     private String url;
     private String publishedAt;
+    private String content;
 
     public NewsArticle(String title, String description, String urlToImage, String url, String publishedAt) {
         this.title = title;
@@ -14,6 +15,7 @@ public class NewsArticle {
         this.urlToImage = urlToImage;
         this.url = url;
         this.publishedAt = publishedAt;
+        this.content = content;
     }
 
     public String getTitle() {
@@ -55,5 +57,9 @@ public class NewsArticle {
     public void setPublishedAt(String publishedAt) {
         this.publishedAt = publishedAt;
     }
+
+    public String getContent() {return content;}
+
+    public void setContent(String content) {this.content = content;}
 }
 

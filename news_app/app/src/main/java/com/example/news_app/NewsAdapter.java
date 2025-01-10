@@ -1,4 +1,5 @@
 package com.example.news_app;
+import android.content.Intent;
 import android.widget.ImageView;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -42,6 +43,15 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
                     .load(imageUrl)
                     .into(holder.imageView);
         }
+
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(context, NewsDetailsActivity.class);
+            intent.putExtra("title", article.getTitle());
+            intent.putExtra("description", article.getDescription());
+            intent.putExtra("content", article.getContent());
+            intent.putExtra("imageUrl", article.getUrlToImage());
+            context.startActivity(intent);
+        });
     }
 
     @Override
