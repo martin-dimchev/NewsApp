@@ -23,35 +23,35 @@ public class MainActivity extends AppCompatActivity {
         buttonTechnology.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openNewsListActivity("Technology");
+                openNewsListActivity("technology");
             }
         });
 
         buttonSports.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openNewsListActivity("Sports");
+                openNewsListActivity("sports");
             }
         });
 
         buttonPolitics.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openNewsListActivity("Politics");
+                openNewsListActivity("politics");
             }
         });
 
         buttonEntertainment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openNewsListActivity("Entertainment");
+                openNewsListActivity("entertainment");
             }
         });
     }
 
     private void openNewsListActivity(String category) {
         Intent intent = new Intent(MainActivity.this, com.example.news_app.NewsListActivity.class);
-        intent.putExtra("category", category);  // Прехвърляме категорията към NewsListActivity
+        intent.putExtra("category", category);
         startActivity(intent);
     }
 }

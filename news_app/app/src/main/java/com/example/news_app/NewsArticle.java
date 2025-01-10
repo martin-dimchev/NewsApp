@@ -16,7 +16,6 @@ public class NewsArticle {
         this.publishedAt = publishedAt;
     }
 
-    // Гетери и сетери
     public String getTitle() {
         return title;
     }
