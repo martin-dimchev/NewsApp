@@ -48,4 +48,13 @@
         android:text="Entertainment"
         android:textSize="18sp"
         android:layout_marginBottom="20dp"/>
+
+    <Button
+        android:id="@+id/buttonFavorites"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Favorites"
+        android:textSize="18sp"
+        android:layout_marginBottom="20dp"/>
+
 </LinearLayout>

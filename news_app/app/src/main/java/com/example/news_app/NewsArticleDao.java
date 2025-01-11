@@ -21,5 +21,10 @@ public interface NewsArticleDao {
 
     @Query("SELECT * FROM favorites WHERE title = :title LIMIT 1")
     NewsArticleEntity getFavoriteByTitle(String title);
+
+
+    @Query("DELETE FROM favorites")
+    void clearFavorites();
+
 }
 

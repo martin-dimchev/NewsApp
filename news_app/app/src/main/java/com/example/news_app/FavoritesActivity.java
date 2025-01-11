@@ -1,6 +1,8 @@
 package com.example.news_app;
 
 import android.os.Bundle;
+import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -24,12 +26,12 @@ public class FavoritesActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         database = AppDatabase.getInstance(this);
+        Button buttonClearFavorites = findViewById(R.id.buttonClearFavorites);
 
+        buttonClearFavorites.setOnClickListener(v -> clearAllFavorites());
         new Thread(() -> {
-            // Get favorite articles from the database
             List<NewsArticleEntity> favoriteEntities = database.newsArticleDao().getAllFavorites();
 
-            // Convert NewsArticleEntity to NewsArticle
             List<NewsArticle> favorites = new ArrayList<>();
             for (NewsArticleEntity entity : favoriteEntities) {
                 favorites.add(new NewsArticle(
@@ -42,10 +44,31 @@ public class FavoritesActivity extends AppCompatActivity {
                 ));
             }
 
-            // Update UI on the main thread
             runOnUiThread(() -> {
                 newsAdapter = new NewsAdapter(FavoritesActivity.this, favorites);
                 recyclerView.setAdapter(newsAdapter);
+            });
+        }).start();
+    }
+
+    private void clearAllFavorites() {
+        new Thread(() -> {
+            // Clear all favorites from the database
+            database.newsArticleDao().clearFavorites();
+
+            // After clearing, fetch the updated list of favorites from the database
+            List<NewsArticleEntity> favoriteEntities = database.newsArticleDao().getAllFavorites();
+
+            // Update UI on the main thread
+            runOnUiThread(() -> {
+                // Update the RecyclerView to show no items
+                if (newsAdapter != null) {
+                    newsAdapter.setNewsList(new ArrayList<>());  // Empty list
+                    newsAdapter.notifyDataSetChanged();
+                }
+
+                // Optionally, you could inform the user that the favorites are cleared
+                Toast.makeText(FavoritesActivity.this, "All favorites cleared", Toast.LENGTH_SHORT).show();
             });
         }).start();
     }
