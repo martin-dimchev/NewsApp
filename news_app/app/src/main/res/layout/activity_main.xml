@@ -3,17 +3,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp"
+    android:padding="32dp"
     android:gravity="center"
-    android:background="@drawable/background_image">
+    android:background="#121212">
 
     <TextView
         android:id="@+id/appTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="News App"
-        android:textSize="24sp"
+        android:textSize="30sp"
         android:textStyle="bold"
+        android:textColor="#00BCD4"
         android:layout_marginBottom="40dp"
         android:gravity="center" />
 
@@ -23,7 +24,11 @@
         android:layout_height="wrap_content"
         android:text="Technology"
         android:textSize="18sp"
-        android:layout_marginBottom="20dp"/>
+        android:textColor="#FFFFFF"
+        android:background="@color/cyan"
+        android:layout_marginBottom="20dp"
+        android:padding="12dp"
+        android:elevation="4dp" />
 
     <Button
         android:id="@+id/buttonSports"
@@ -31,7 +36,11 @@
         android:layout_height="wrap_content"
         android:text="Sports"
         android:textSize="18sp"
-        android:layout_marginBottom="20dp"/>
+        android:textColor="#FFFFFF"
+        android:background="@color/cyan"
+        android:layout_marginBottom="20dp"
+        android:padding="12dp"
+        android:elevation="4dp" />
 
     <Button
         android:id="@+id/buttonPolitics"
@@ -39,7 +48,11 @@
         android:layout_height="wrap_content"
         android:text="Politics"
         android:textSize="18sp"
-        android:layout_marginBottom="20dp"/>
+        android:textColor="#FFFFFF"
+        android:background="@color/cyan"
+        android:layout_marginBottom="20dp"
+        android:padding="12dp"
+        android:elevation="4dp" />
 
     <Button
         android:id="@+id/buttonEntertainment"
@@ -47,7 +60,11 @@
         android:layout_height="wrap_content"
         android:text="Entertainment"
         android:textSize="18sp"
-        android:layout_marginBottom="20dp"/>
+        android:textColor="#FFFFFF"
+        android:background="@color/cyan"
+        android:layout_marginBottom="20dp"
+        android:padding="12dp"
+        android:elevation="4dp" />
 
     <Button
         android:id="@+id/buttonFavorites"
@@ -55,6 +72,9 @@
         android:layout_height="wrap_content"
         android:text="Favorites"
         android:textSize="18sp"
-        android:layout_marginBottom="20dp"/>
-
+        android:textColor="#FFFFFF"
+        android:background="@color/cyan"
+        android:layout_marginBottom="20dp"
+        android:padding="12dp"
+        android:elevation="4dp" />
 </LinearLayout>

@@ -1,7 +1,25 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.News_app" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+<resources>
+
+    <!-- Dark theme -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary background color -->
+        <item name="android:windowBackground">#121212</item> <!-- Very Dark Grey -->
+
+        <!-- Text color -->
+        <item name="android:textColorPrimary">@android:color/white</item>
+
+        <!-- Button color -->
+        <item name="colorPrimary">#00BCD4</item> <!-- Cyan -->
+        <item name="colorPrimaryVariant">#008C92</item> <!-- Dark Cyan -->
+        <item name="colorOnPrimary">@android:color/white</item> <!-- White text on cyan button -->
     </style>
+
+    <!-- Dark theme button style -->
+    <style name="ButtonStyle" parent="Widget.MaterialComponents.Button">
+        <item name="android:background">@color/cyan</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:padding">12dp</item>
+        <item name="android:elevation">4dp</item>
+    </style>
+
 </resources>
