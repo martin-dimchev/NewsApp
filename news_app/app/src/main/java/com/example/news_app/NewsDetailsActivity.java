@@ -1,7 +1,9 @@
 package com.example.news_app;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -77,17 +79,18 @@ public class NewsDetailsActivity extends AppCompatActivity {
                 article.setImageUrl(imageUrl);
                 article.setPublishedAt(publishedAt);
                 NewsArticleEntity existing = database.newsArticleDao().getFavoriteByTitle(title);
+                Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
                 if (existing != null) {
                     database.newsArticleDao().deleteFavorite(existing);
                     runOnUiThread(() -> {
                         buttonFavorite.setText("Add to Favorites");
-                        Toast.makeText(this, "Removed from Favorites", Toast.LENGTH_SHORT).show();
+                        vibrator.vibrate(100);
                     });
                 } else {
                     database.newsArticleDao().insertFavorite(article);
                     runOnUiThread(() -> {
                         buttonFavorite.setText("Remove from Favorites");
-                        Toast.makeText(this, "Added to Favorites", Toast.LENGTH_SHORT).show();
+                        vibrator.vibrate(100);
                     });
                 }
             }).start();
