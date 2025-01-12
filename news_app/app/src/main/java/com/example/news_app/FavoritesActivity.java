@@ -1,8 +1,13 @@
 package com.example.news_app;
 
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.GestureDetector;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.widget.Button;
 import android.widget.Toast;
@@ -11,8 +16,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class FavoritesActivity extends AppCompatActivity {
 
@@ -20,6 +30,7 @@ public class FavoritesActivity extends AppCompatActivity {
     private NewsAdapter newsAdapter;
     private AppDatabase database;
     private GestureDetector gestureDetector;
+    private boolean isDesc = true; // Default sort order: descending
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +48,9 @@ public class FavoritesActivity extends AppCompatActivity {
         // Initialize GestureDetector
         gestureDetector = new GestureDetector(this, new GestureListener());
 
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayShowTitleEnabled(false);  // This hides the title
+        }
         // Add touch listener to the RecyclerView
         recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
             @Override
@@ -65,22 +79,52 @@ public class FavoritesActivity extends AppCompatActivity {
 
             List<NewsArticle> favorites = new ArrayList<>();
             for (NewsArticleEntity entity : favoriteEntities) {
+                String publishedAt = entity.getPublishedAt(); // Get the publishedAt value
+                Log.d("PublishedAt", publishedAt);
+                // Add the NewsArticle to the list
                 favorites.add(new NewsArticle(
                         entity.getTitle(),
                         entity.getDescription(),
                         entity.getContent(),
                         entity.getImageUrl(),
                         "a",
-                        "a"
+                        entity.getPublishedAt()// Use the non-null publishedAt
+
                 ));
             }
 
+            // Sort the favorites based on the publishedAt date
+            Collections.sort(favorites, (news1, news2) -> {
+                try {
+                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US);
+                    Date date1 = format.parse(news1.getPublishedAt());
+                    Date date2 = format.parse(news2.getPublishedAt());
+
+                    if (isDesc) {
+                        return date2.compareTo(date1);  // Sort in descending order
+                    } else {
+                        return date1.compareTo(date2);  // Sort in ascending order
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                    return 0;  // Return 0 if parsing fails
+                }
+            });
+
+            // Update the UI with the sorted news
             runOnUiThread(() -> {
-                newsAdapter = new NewsAdapter(FavoritesActivity.this, favorites);
-                recyclerView.setAdapter(newsAdapter);
+                if (newsAdapter != null) {
+                    newsAdapter.setNewsList(favorites);
+                    newsAdapter.notifyDataSetChanged(); // Notify that the data set has changed
+                } else {
+                    newsAdapter = new NewsAdapter(FavoritesActivity.this, favorites);
+                    recyclerView.setAdapter(newsAdapter);
+                }
             });
         }).start();
     }
+
+
 
     private void clearAllFavorites() {
         new Thread(() -> {
@@ -133,4 +177,29 @@ public class FavoritesActivity extends AppCompatActivity {
         overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         Toast.makeText(this, "Swiped Right to Main Screen!", Toast.LENGTH_SHORT).show();
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.options_menu, menu); // Inflate the menu
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.sort_ascending) {
+            isDesc = false; // Sort Ascending
+            loadFavorites();  // Reload favorites with new sort order
+            Toast.makeText(this, "Sorted Ascending", Toast.LENGTH_SHORT).show();
+            return true;
+        } else if (item.getItemId() == R.id.sort_descending) {
+            isDesc = true; // Sort Descending
+            loadFavorites();  // Reload favorites with new sort order
+            Toast.makeText(this, "Sorted Descending", Toast.LENGTH_SHORT).show();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
+    }
+
 }

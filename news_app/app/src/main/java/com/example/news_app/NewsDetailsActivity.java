@@ -2,6 +2,7 @@ package com.example.news_app;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -46,6 +47,7 @@ public class NewsDetailsActivity extends AppCompatActivity {
         String description = intent.getStringExtra("description");
         String content = intent.getStringExtra("content");
         String imageUrl = intent.getStringExtra("imageUrl");
+        String publishedAt = intent.getStringExtra("publishedAt");
 
         // Set the data to the views
         newsTitle.setText(title);
@@ -66,7 +68,6 @@ public class NewsDetailsActivity extends AppCompatActivity {
             });
         }).start();
 
-        // Handle favorite button click
         buttonFavorite.setOnClickListener(v -> {
             new Thread(() -> {
                 NewsArticleEntity article = new NewsArticleEntity();
@@ -74,7 +75,7 @@ public class NewsDetailsActivity extends AppCompatActivity {
                 article.setDescription(description);
                 article.setContent(content);
                 article.setImageUrl(imageUrl);
-
+                article.setPublishedAt(publishedAt);
                 NewsArticleEntity existing = database.newsArticleDao().getFavoriteByTitle(title);
                 if (existing != null) {
                     database.newsArticleDao().deleteFavorite(existing);

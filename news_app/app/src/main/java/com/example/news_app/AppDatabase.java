@@ -5,7 +5,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import android.content.Context;
 
-@Database(entities = {NewsArticleEntity.class}, version = 1, exportSchema = false)
+@Database(entities = {NewsArticleEntity.class}, version = 2, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract NewsArticleDao newsArticleDao();
 

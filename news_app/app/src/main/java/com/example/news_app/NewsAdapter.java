@@ -35,6 +35,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
 
         holder.titleTextView.setText(article.getTitle());
         holder.descriptionTextView.setText(article.getDescription());
+        holder.publishedAtTextView.setText(article.getPublishedAt());
 
         String imageUrl = article.getUrlToImage();
         if (imageUrl != null && !imageUrl.isEmpty()) {
@@ -50,6 +51,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
             intent.putExtra("description", article.getDescription());
             intent.putExtra("content", article.getContent());
             intent.putExtra("imageUrl", article.getUrlToImage());
+            intent.putExtra("publishedAt", article.getPublishedAt());
             context.startActivity(intent);
         });
     }
@@ -68,12 +70,14 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         ImageView imageView;
         TextView titleTextView;
         TextView descriptionTextView;
+        TextView publishedAtTextView;
 
         public NewsViewHolder(View itemView) {
             super(itemView);
             titleTextView = itemView.findViewById(R.id.newsTitle);
             descriptionTextView = itemView.findViewById(R.id.newsDescription);
             imageView = itemView.findViewById(R.id.imageView);
+            publishedAtTextView = itemView.findViewById(R.id.newsPublishedAt);
         }
     }
 }

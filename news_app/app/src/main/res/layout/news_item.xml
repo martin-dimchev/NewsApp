@@ -31,5 +31,15 @@
         android:text="News description"
         android:textSize="14sp"
         android:textColor="#666666"/>
+
+    <TextView
+        android:id="@+id/newsPublishedAt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Published on: Jan 12, 2025"
+        android:textSize="12sp"
+        android:textColor="#999999"
+        android:layout_gravity="end|bottom"
+        android:layout_marginTop="8dp"/>
 </LinearLayout>
 

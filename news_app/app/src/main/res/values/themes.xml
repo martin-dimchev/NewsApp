@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Light theme -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="AppThemeActionBar" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary background color -->
         <item name="android:windowBackground">@android:color/white</item>
 
@@ -9,17 +9,37 @@
         <item name="android:textColorPrimary">@android:color/black</item>
 
         <!-- Button color -->
-        <item name="colorPrimary">#00BCD4</item> <!-- Cyan -->
-        <item name="colorPrimaryVariant">#008C92</item> <!-- Dark Cyan -->
-        <item name="colorOnPrimary">@android:color/white</item> <!-- White text on cyan button -->
+        <item name="colorPrimaryVariant">#008C92</item>
+
+        <item name="colorPrimary">#00BCD4</item>
+
+        <item name="colorPrimaryDark">#008C92</item>
+
+        <item name="colorOnPrimary">#FFFFFF</item>
+
+        <!-- Action Bar background color -->
+        <item name="android:actionBarStyle">@color/cyan</item>
     </style>
 
     <!-- Light theme button style -->
-    <style name="ButtonStyle" parent="Widget.MaterialComponents.Button">
-        <item name="android:background">@color/cyan</item>
-        <item name="android:textColor">@android:color/white</item>
-        <item name="android:padding">12dp</item>
-        <item name="android:elevation">4dp</item>
+    <style name="AppThemeNoActionBar" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary background color -->
+        <item name="android:windowBackground">@android:color/white</item>
+
+        <!-- Text color -->
+        <item name="android:textColorPrimary">@android:color/black</item>
+
+        <!-- Button color -->
+        <item name="colorPrimaryVariant">#008C92</item>
+
+        <item name="colorPrimary">#00BCD4</item>
+
+        <item name="colorPrimaryDark">#008C92</item>
+
+        <item name="colorOnPrimary">#FFFFFF</item>
+
+        <!-- Action Bar background color -->
+        <item name="android:actionBarStyle">@color/cyan</item>
     </style>
 
 </resources>

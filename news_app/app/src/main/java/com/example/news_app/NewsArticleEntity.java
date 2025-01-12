@@ -13,6 +13,7 @@ public class NewsArticleEntity {
     private String description;
     private String content;
     private String imageUrl;
+    private String publishedAt;
 
     // Getters and Setters
     public int getId() { return id; }
@@ -29,4 +30,6 @@ public class NewsArticleEntity {
 
     public String getImageUrl() { return imageUrl; }
     public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
+    public String getPublishedAt () { return publishedAt; }
+    public void setPublishedAt(String publishedAt) { this.publishedAt = publishedAt; }
 }
