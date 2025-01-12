@@ -125,6 +125,5 @@ public class NewsListActivity extends AppCompatActivity {
         Intent intent = new Intent(NewsListActivity.this, MainActivity.class);
         startActivity(intent);
         overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-        Toast.makeText(this, "Swiped Right to Main Screen!", Toast.LENGTH_SHORT).show();
     }
 }

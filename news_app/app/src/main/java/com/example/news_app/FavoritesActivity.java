@@ -175,7 +175,6 @@ public class FavoritesActivity extends AppCompatActivity {
         Intent intent = new Intent(FavoritesActivity.this, MainActivity.class);
         startActivity(intent);
         overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-        Toast.makeText(this, "Swiped Right to Main Screen!", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -190,12 +189,10 @@ public class FavoritesActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.sort_ascending) {
             isDesc = false; // Sort Ascending
             loadFavorites();  // Reload favorites with new sort order
-            Toast.makeText(this, "Sorted Ascending", Toast.LENGTH_SHORT).show();
             return true;
         } else if (item.getItemId() == R.id.sort_descending) {
             isDesc = true; // Sort Descending
             loadFavorites();  // Reload favorites with new sort order
-            Toast.makeText(this, "Sorted Descending", Toast.LENGTH_SHORT).show();
             return true;
         } else {
             return super.onOptionsItemSelected(item);
