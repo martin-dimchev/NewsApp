@@ -2,18 +2,21 @@ package com.example.news_app;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GestureDetectorCompat;
 
 import com.bumptech.glide.Glide;
@@ -31,6 +34,9 @@ public class NewsDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_details);
 
+        // Create the notification channel (only for devices API 26 and above)
+        NotificationHelper.createNotificationChannel(this);
+
         // Initialize views
         newsTitle = findViewById(R.id.newsTitle);
         newsDescription = findViewById(R.id.newsDescription);
@@ -42,6 +48,15 @@ public class NewsDetailsActivity extends AppCompatActivity {
         gestureDetector = new GestureDetectorCompat(this, new GestureListener());
 
         database = AppDatabase.getInstance(this);
+
+        // Check permission for Android 13 and higher (POST_NOTIFICATIONS)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS)
+                    != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{android.Manifest.permission.POST_NOTIFICATIONS}, 1);
+            }
+        }
 
         // Get the data passed from NewsListActivity
         Intent intent = getIntent();
@@ -61,6 +76,7 @@ public class NewsDetailsActivity extends AppCompatActivity {
                 .load(imageUrl)
                 .into(newsImage);
 
+        // Check if the article is already in the favorites
         new Thread(() -> {
             NewsArticleEntity favorite = database.newsArticleDao().getFavoriteByTitle(title);
             runOnUiThread(() -> {
@@ -70,6 +86,7 @@ public class NewsDetailsActivity extends AppCompatActivity {
             });
         }).start();
 
+        // Handle favorite button click
         buttonFavorite.setOnClickListener(v -> {
             new Thread(() -> {
                 NewsArticleEntity article = new NewsArticleEntity();
@@ -85,12 +102,14 @@ public class NewsDetailsActivity extends AppCompatActivity {
                     runOnUiThread(() -> {
                         buttonFavorite.setText("Add to Favorites");
                         vibrator.vibrate(100);
+                        NotificationHelper.showNotification(NewsDetailsActivity.this, title, false);
                     });
                 } else {
                     database.newsArticleDao().insertFavorite(article);
                     runOnUiThread(() -> {
                         buttonFavorite.setText("Remove from Favorites");
                         vibrator.vibrate(100);
+                        NotificationHelper.showNotification(NewsDetailsActivity.this, title, true);
                     });
                 }
             }).start();

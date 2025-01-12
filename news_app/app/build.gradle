@@ -12,6 +12,8 @@ android {
         targetSdk 34
         versionCode 1
         versionName "1.0"
+        minSdkVersion 21 // Or higher (ensure it's compatible with your app's requirements)
+        targetSdkVersion 33 // Targeting Android 13 (API level 33)
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
