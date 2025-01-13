@@ -28,12 +28,9 @@ public class NotificationHelper {
     }
 
     public static void showNotification(Context context, String title, boolean isAdding) {
-        // For Android 13 (API 33) and above, you would check the permission (if needed)
-        // But on Android 12 and below, we don't need the permission
 
         String message = isAdding ? "Added to favorites" : "Removed from favorites";
 
-        // Create the notification
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(android.R.drawable.star_on)
                 .setContentTitle(title)
@@ -41,19 +38,16 @@ public class NotificationHelper {
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setAutoCancel(true);
 
-        // For devices below Android Oreo, set the priority manually
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
             builder.setPriority(NotificationCompat.PRIORITY_HIGH);
         }
 
-        // Send the notification
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
 
         try {
             notificationManager.notify(notificationId++, builder.build());
         } catch (SecurityException e) {
             e.printStackTrace();
-            // Handle the exception - log it or show a Toast
         }
     }
 }

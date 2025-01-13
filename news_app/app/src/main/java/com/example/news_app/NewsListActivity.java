@@ -44,10 +44,10 @@ public class NewsListActivity extends AppCompatActivity {
 
         loadNews(category);
 
-        // Initialize GestureDetector
+
         gestureDetector = new GestureDetector(this, new GestureListener());
 
-        // Add touch listener to the RecyclerView
+
         recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
             @Override
             public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
@@ -57,12 +57,10 @@ public class NewsListActivity extends AppCompatActivity {
 
             @Override
             public void onTouchEvent(RecyclerView rv, MotionEvent e) {
-                // Not needed
             }
 
             @Override
             public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-                // Not needed
             }
         });
     }
@@ -97,7 +95,7 @@ public class NewsListActivity extends AppCompatActivity {
 
         @Override
         public boolean onDown(MotionEvent e) {
-            return true; // Required for onFling to work
+            return true;
         }
 
         @Override

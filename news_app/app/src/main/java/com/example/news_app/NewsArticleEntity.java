@@ -15,7 +15,6 @@ public class NewsArticleEntity {
     private String imageUrl;
     private String publishedAt;
 
-    // Getters and Setters
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
 

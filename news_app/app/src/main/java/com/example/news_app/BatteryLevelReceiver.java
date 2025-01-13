@@ -14,11 +14,9 @@ public class BatteryLevelReceiver extends BroadcastReceiver {
         float batteryPct = level / (float) scale * 100;
 
         if (batteryPct <= 10) {
-            // Force close the app
             ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
             activityManager.killBackgroundProcesses(context.getPackageName());
 
-            // Force stop the app process
             android.os.Process.killProcess(android.os.Process.myPid());
             System.exit(0);
         }

@@ -7,7 +7,6 @@
     android:gravity="center"
     android:background="#121212">
 
-    <!-- Stylish App Title Container -->
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -55,7 +54,6 @@
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
-    <!-- Buttons with rounder background -->
     <Button
         android:id="@+id/buttonTechnology"
         android:layout_width="match_parent"
@@ -115,4 +113,5 @@
         android:layout_marginBottom="20dp"
         android:padding="12dp"
         android:elevation="4dp" />
+
 </LinearLayout>

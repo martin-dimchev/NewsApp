@@ -4,18 +4,18 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    android:background="#121212"> <!-- Dark background -->
+    android:background="#121212">
 
-    <!-- Centered Progress Bar -->
+
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
         android:layout_gravity="center"
-        android:indeterminateTint="#4DD0E1" /> <!-- Cyan tint for dark theme -->
+        android:indeterminateTint="#4DD0E1" />
 
-    <!-- RecyclerView for displaying content -->
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
@@ -23,6 +23,6 @@
         android:padding="8dp"
         android:scrollbars="vertical"
         android:clipToPadding="false"
-        android:background="@color/transparent" /> <!-- Transparent background for better integration -->
+        android:background="@color/transparent" />
 
 </LinearLayout>

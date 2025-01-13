@@ -1,14 +1,11 @@
 package com.example.news_app;
 
 import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.os.BatteryManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -23,9 +20,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Check if app was closed by a previous intent with the "EXIT" flag
         if (getIntent().getBooleanExtra("EXIT", false)) {
-            finishAffinity(); // Close the activity
+            finishAffinity();
         }
 
         buttonTechnology = findViewById(R.id.buttonTechnology);
@@ -34,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
         buttonEntertainment = findViewById(R.id.buttonEntertainment);
         buttonFavorites = findViewById(R.id.buttonFavorites);
 
-        // Register the battery level receiver
         receiver = new BatteryLevelReceiver();
         registerReceiver(receiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
 
@@ -101,7 +96,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void closeApp() {
-        // Method 1: Close all activities
         finishAffinity();
 
     }

@@ -8,7 +8,6 @@
     android:background="#121212"
     tools:context=".FavoritesActivity">
 
-    <!-- Button to clear all favorites -->
     <Button
         android:id="@+id/buttonClearFavorites"
         android:layout_width="wrap_content"
@@ -20,7 +19,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- RecyclerView to display favorites -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewFavorites"
         android:layout_width="0dp"

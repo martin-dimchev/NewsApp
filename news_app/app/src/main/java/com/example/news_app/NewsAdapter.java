@@ -39,14 +39,12 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         holder.titleTextView.setText(article.getTitle());
         holder.descriptionTextView.setText(article.getDescription());
 
-        // Format the date string
         String rawDate = article.getPublishedAt();
         String formattedDate = formatDate(rawDate);
         holder.publishedAtTextView.setText(formattedDate);
 
         String imageUrl = article.getUrlToImage();
         if (imageUrl != null && !imageUrl.isEmpty()) {
-            // Use Glide to load the image
             Glide.with(context)
                     .load(imageUrl)
                     .into(holder.imageView);
@@ -59,7 +57,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
             intent.putExtra("description", article.getDescription());
             intent.putExtra("content", article.getContent());
             intent.putExtra("imageUrl", article.getUrlToImage());
-            intent.putExtra("publishedAt", formattedDate); // Pass the formatted date
+            intent.putExtra("publishedAt", formattedDate);
             context.startActivity(intent);
         });
     }
@@ -70,14 +68,12 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
         }
 
         try {
-            // Define the input and output date formats
             SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault());
             SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
 
-            // Parse the raw date string into a Date object
             Date date = inputFormat.parse(rawDate);
 
-            // Format the Date object into the desired string format
+
             return outputFormat.format(date);
         } catch (Exception e) {
             e.printStackTrace();
@@ -92,7 +88,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
 
     public void setNewsList(List<NewsArticle> newsList) {
         this.newsList = newsList;
-        notifyDataSetChanged();  // Notify the adapter that the data has changed
+        notifyDataSetChanged();
     }
 
     public static class NewsViewHolder extends RecyclerView.ViewHolder {

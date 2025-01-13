@@ -1,6 +1,4 @@
 package com.example.news_app;
-
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,7 +28,7 @@ public class FavoritesActivity extends AppCompatActivity {
     private NewsAdapter newsAdapter;
     private AppDatabase database;
     private GestureDetector gestureDetector;
-    private boolean isDesc = true; // Default sort order: descending
+    private boolean isDesc = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,14 +43,13 @@ public class FavoritesActivity extends AppCompatActivity {
 
         buttonClearFavorites.setOnClickListener(v -> clearAllFavorites());
 
-        // Initialize GestureDetector
         gestureDetector = new GestureDetector(this, new GestureListener());
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle("Your Favorites");
-            getSupportActionBar().setDisplayShowTitleEnabled(true);  // Make sure title is displayed
+            getSupportActionBar().setDisplayShowTitleEnabled(true);
         }
-        // Add touch listener to the RecyclerView
+
         recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
             @Override
             public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
@@ -62,12 +59,10 @@ public class FavoritesActivity extends AppCompatActivity {
 
             @Override
             public void onTouchEvent(RecyclerView rv, MotionEvent e) {
-                // Not needed
             }
 
             @Override
             public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-                // Not needed
             }
         });
 
@@ -93,15 +88,10 @@ public class FavoritesActivity extends AppCompatActivity {
                 ));
             }
 
-            // Sort the favorites list
             Collections.sort(favorites, (news1, news2) -> {
                 try {
                     SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US);
 
-                    // Add logging to debug date parsing
-                    Log.d("Sorting", "Comparing dates: " + news1.getPublishedAt() + " and " + news2.getPublishedAt());
-
-                    // Remove any potential milliseconds from the date string
                     String date1Str = news1.getPublishedAt().split("\\.")[0];
                     String date2Str = news2.getPublishedAt().split("\\.")[0];
 
@@ -109,16 +99,11 @@ public class FavoritesActivity extends AppCompatActivity {
                     Date date2 = format.parse(date2Str);
 
                     if (date1 == null || date2 == null) {
-                        Log.e("Sorting", "Date parsing returned null");
                         return 0;
                     }
 
-                    Log.d("Sorting", "Parsed dates: " + date1 + " and " + date2);
-
-                    // Sort based on isDesc flag
                     return isDesc ? date2.compareTo(date1) : date1.compareTo(date2);
                 } catch (ParseException e) {
-                    Log.e("Sorting", "Error parsing date: " + e.getMessage());
                     e.printStackTrace();
                     return 0;
                 }
@@ -132,7 +117,6 @@ public class FavoritesActivity extends AppCompatActivity {
                     newsAdapter.setNewsList(favorites);
                     newsAdapter.notifyDataSetChanged();
                 }
-                // Add a toast to show the current sort order
                 String sortOrder = isDesc ? "Descending" : "Ascending";
                 Toast.makeText(FavoritesActivity.this, "Sorted by date: " + sortOrder, Toast.LENGTH_SHORT).show();
             });
@@ -162,7 +146,7 @@ public class FavoritesActivity extends AppCompatActivity {
 
         @Override
         public boolean onDown(MotionEvent e) {
-            return true; // Required for onFling to work
+            return true;
         }
 
         @Override
@@ -195,19 +179,19 @@ public class FavoritesActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.options_menu, menu); // Inflate the menu
+        inflater.inflate(R.menu.options_menu, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.sort_ascending) {
-            isDesc = false; // Sort Ascending
-            loadFavorites();  // Reload favorites with new sort order
+            isDesc = false;
+            loadFavorites();
             return true;
         } else if (item.getItemId() == R.id.sort_descending) {
-            isDesc = true; // Sort Descending
-            loadFavorites();  // Reload favorites with new sort order
+            isDesc = true;
+            loadFavorites();
             return true;
         } else {
             return super.onOptionsItemSelected(item);

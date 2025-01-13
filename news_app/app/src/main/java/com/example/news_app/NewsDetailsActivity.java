@@ -38,22 +38,20 @@ public class NewsDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_details);
 
-        // Create the notification channel (only for devices API 26 and above)
+
         NotificationHelper.createNotificationChannel(this);
 
-        // Initialize views
+
         newsTitle = findViewById(R.id.newsTitle);
         newsDescription = findViewById(R.id.newsDescription);
         newsContent = findViewById(R.id.newsContent);
         newsImage = findViewById(R.id.newsImage);
         buttonFavorite = findViewById(R.id.buttonFavorite);
 
-        // Initialize gesture detector
         gestureDetector = new GestureDetectorCompat(this, new GestureListener());
 
         database = AppDatabase.getInstance(this);
 
-        // Check permission for Android 13 and higher (POST_NOTIFICATIONS)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS)
                     != PackageManager.PERMISSION_GRANTED) {
@@ -62,7 +60,6 @@ public class NewsDetailsActivity extends AppCompatActivity {
             }
         }
 
-        // Get the data passed from NewsListActivity
         Intent intent = getIntent();
         String title = intent.getStringExtra("title");
         String description = intent.getStringExtra("description");
@@ -70,17 +67,14 @@ public class NewsDetailsActivity extends AppCompatActivity {
         String imageUrl = intent.getStringExtra("imageUrl");
         String publishedAt = intent.getStringExtra("publishedAt");
 
-        // Set the data to the views
         newsTitle.setText(title);
         newsDescription.setText(description);
         newsContent.setText(content);
 
-        // Load the image using Glide
         Glide.with(this)
                 .load(imageUrl)
                 .into(newsImage);
 
-        // Check if the article is already in the favorites
         new Thread(() -> {
             NewsArticleEntity favorite = database.newsArticleDao().getFavoriteByTitle(title);
             runOnUiThread(() -> {
@@ -90,7 +84,6 @@ public class NewsDetailsActivity extends AppCompatActivity {
             });
         }).start();
 
-        // Handle favorite button click
         buttonFavorite.setOnClickListener(v -> {
             new Thread(() -> {
                 NewsArticleEntity article = new NewsArticleEntity();
@@ -129,14 +122,12 @@ public class NewsDetailsActivity extends AppCompatActivity {
             SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
             SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault());
 
-            // Parse the formatted date string
             Date date = outputFormat.parse(formattedDate);
 
-            // Convert it back to raw format
             return inputFormat.format(date);
         } catch (Exception e) {
             e.printStackTrace();
-            return null; // Return null or an appropriate fallback
+            return null;
         }
     }
 
@@ -146,7 +137,7 @@ public class NewsDetailsActivity extends AppCompatActivity {
 
         @Override
         public boolean onDown(MotionEvent e) {
-            return false;  // Return false to allow other touch events
+            return false;
         }
 
         @Override
@@ -158,7 +149,7 @@ public class NewsDetailsActivity extends AppCompatActivity {
                 if (Math.abs(diffX) > Math.abs(diffY) &&
                         Math.abs(diffX) > SWIPE_THRESHOLD &&
                         Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
-                    if (diffX > 0) { // Right swipe
+                    if (diffX > 0) {
                         onBackPressed();
                         return true;
                     }
@@ -178,7 +169,6 @@ public class NewsDetailsActivity extends AppCompatActivity {
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
-        // Check if the touch event is on the favorite button
         if (buttonFavorite != null) {
             int[] location = new int[2];
             buttonFavorite.getLocationOnScreen(location);
@@ -189,12 +179,10 @@ public class NewsDetailsActivity extends AppCompatActivity {
                     ev.getX() <= buttonX + buttonFavorite.getWidth() &&
                     ev.getY() >= buttonY &&
                     ev.getY() <= buttonY + buttonFavorite.getHeight()) {
-                // If touch is on button, let the normal event handling take place
                 return super.dispatchTouchEvent(ev);
             }
         }
 
-        // If not on button, check for swipe gesture
         if (gestureDetector.onTouchEvent(ev)) {
             return true;
         }
