@@ -21,6 +21,10 @@ import androidx.core.view.GestureDetectorCompat;
 
 import com.bumptech.glide.Glide;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 public class NewsDetailsActivity extends AppCompatActivity {
 
     private Button buttonFavorite;
@@ -95,6 +99,10 @@ public class NewsDetailsActivity extends AppCompatActivity {
                 article.setContent(content);
                 article.setImageUrl(imageUrl);
                 article.setPublishedAt(publishedAt);
+
+                String rawDate = toRawDateFormat(publishedAt);
+                article.setPublishedAt(rawDate);
+
                 NewsArticleEntity existing = database.newsArticleDao().getFavoriteByTitle(title);
                 Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
                 if (existing != null) {
@@ -114,6 +122,22 @@ public class NewsDetailsActivity extends AppCompatActivity {
                 }
             }).start();
         });
+    }
+
+    private String toRawDateFormat(String formattedDate) {
+        try {
+            SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
+            SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault());
+
+            // Parse the formatted date string
+            Date date = outputFormat.parse(formattedDate);
+
+            // Convert it back to raw format
+            return inputFormat.format(date);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null; // Return null or an appropriate fallback
+        }
     }
 
     private class GestureListener extends GestureDetector.SimpleOnGestureListener {

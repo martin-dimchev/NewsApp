@@ -12,7 +12,7 @@ public class NotificationHelper {
     private static int notificationId = 0;
 
     public static void createNotificationChannel(Context context) {
-        // Create the notification channel only for Android Oreo (API 26) and above
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel(
                     CHANNEL_ID,

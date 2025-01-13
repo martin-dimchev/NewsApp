@@ -76,50 +76,64 @@ public class FavoritesActivity extends AppCompatActivity {
     private void loadFavorites() {
         new Thread(() -> {
             List<NewsArticleEntity> favoriteEntities = database.newsArticleDao().getAllFavorites();
-
             List<NewsArticle> favorites = new ArrayList<>();
+
             for (NewsArticleEntity entity : favoriteEntities) {
-                String publishedAt = entity.getPublishedAt(); // Get the publishedAt value
-                Log.d("PublishedAt", publishedAt);
-                // Add the NewsArticle to the list
+                String publishedAt = entity.getPublishedAt();
+                Log.d("PublishedAt", "Date before processing: " + publishedAt);
+
                 favorites.add(new NewsArticle(
                         entity.getTitle(),
                         entity.getDescription(),
                         entity.getContent(),
                         entity.getImageUrl(),
                         "a",
-                        entity.getPublishedAt()// Use the non-null publishedAt
-
+                        publishedAt
                 ));
             }
 
-            // Sort the favorites based on the publishedAt date
+            // Sort the favorites list
             Collections.sort(favorites, (news1, news2) -> {
                 try {
-                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US);
-                    Date date1 = format.parse(news1.getPublishedAt());
-                    Date date2 = format.parse(news2.getPublishedAt());
+                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US);
 
-                    if (isDesc) {
-                        return date2.compareTo(date1);  // Sort in descending order
-                    } else {
-                        return date1.compareTo(date2);  // Sort in ascending order
+                    // Add logging to debug date parsing
+                    Log.d("Sorting", "Comparing dates: " + news1.getPublishedAt() + " and " + news2.getPublishedAt());
+
+                    // Remove any potential milliseconds from the date string
+                    String date1Str = news1.getPublishedAt().split("\\.")[0];
+                    String date2Str = news2.getPublishedAt().split("\\.")[0];
+
+                    Date date1 = format.parse(date1Str);
+                    Date date2 = format.parse(date2Str);
+
+                    if (date1 == null || date2 == null) {
+                        Log.e("Sorting", "Date parsing returned null");
+                        return 0;
                     }
+
+                    Log.d("Sorting", "Parsed dates: " + date1 + " and " + date2);
+
+                    // Sort based on isDesc flag
+                    return isDesc ? date2.compareTo(date1) : date1.compareTo(date2);
                 } catch (ParseException e) {
+                    Log.e("Sorting", "Error parsing date: " + e.getMessage());
                     e.printStackTrace();
-                    return 0;  // Return 0 if parsing fails
+                    return 0;
                 }
             });
 
-            // Update the UI with the sorted news
             runOnUiThread(() -> {
-                if (newsAdapter != null) {
-                    newsAdapter.setNewsList(favorites);
-                    newsAdapter.notifyDataSetChanged(); // Notify that the data set has changed
-                } else {
+                if (newsAdapter == null) {
                     newsAdapter = new NewsAdapter(FavoritesActivity.this, favorites);
                     recyclerView.setAdapter(newsAdapter);
+                } else {
+                    newsAdapter.setNewsList(favorites);
+                    newsAdapter.notifyDataSetChanged();
                 }
+                // Add a toast to show the current sort order
+                String sortOrder = isDesc ? "Descending" : "Ascending";
+                Toast.makeText(FavoritesActivity.this, "Sorted by date: " + sortOrder, Toast.LENGTH_SHORT).show();
             });
         }).start();
     }

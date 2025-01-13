@@ -11,7 +11,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder> {
 
@@ -35,7 +38,11 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
 
         holder.titleTextView.setText(article.getTitle());
         holder.descriptionTextView.setText(article.getDescription());
-        holder.publishedAtTextView.setText(article.getPublishedAt());
+
+        // Format the date string
+        String rawDate = article.getPublishedAt();
+        String formattedDate = formatDate(rawDate);
+        holder.publishedAtTextView.setText(formattedDate);
 
         String imageUrl = article.getUrlToImage();
         if (imageUrl != null && !imageUrl.isEmpty()) {
@@ -45,15 +52,37 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.NewsViewHolder
                     .into(holder.imageView);
         }
 
+
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, NewsDetailsActivity.class);
             intent.putExtra("title", article.getTitle());
             intent.putExtra("description", article.getDescription());
             intent.putExtra("content", article.getContent());
             intent.putExtra("imageUrl", article.getUrlToImage());
-            intent.putExtra("publishedAt", article.getPublishedAt());
+            intent.putExtra("publishedAt", formattedDate); // Pass the formatted date
             context.startActivity(intent);
         });
+    }
+
+    private String formatDate(String rawDate) {
+        if (rawDate == null || rawDate.isEmpty()) {
+            return "Unknown Date";
+        }
+
+        try {
+            // Define the input and output date formats
+            SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault());
+            SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
+
+            // Parse the raw date string into a Date object
+            Date date = inputFormat.parse(rawDate);
+
+            // Format the Date object into the desired string format
+            return outputFormat.format(date);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Invalid Date";
+        }
     }
 
     @Override
