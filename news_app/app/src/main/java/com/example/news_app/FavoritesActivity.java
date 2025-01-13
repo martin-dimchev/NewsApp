@@ -49,7 +49,8 @@ public class FavoritesActivity extends AppCompatActivity {
         gestureDetector = new GestureDetector(this, new GestureListener());
 
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayShowTitleEnabled(false);  // This hides the title
+            getSupportActionBar().setTitle("Your Favorites");
+            getSupportActionBar().setDisplayShowTitleEnabled(true);  // Make sure title is displayed
         }
         // Add touch listener to the RecyclerView
         recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {

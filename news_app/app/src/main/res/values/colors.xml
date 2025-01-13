@@ -4,4 +4,5 @@
     <color name="darkCyan">#008C92</color> <!-- Dark Cyan -->
     <color name="veryDarkGrey">#121212</color> <!-- Very Dark Grey -->
     <color name="white">#FFFFFF</color> <!-- White color -->
+    <color name="transparent">#00FFFFFF</color>
 </resources>

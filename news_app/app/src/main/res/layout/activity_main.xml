@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -7,17 +7,55 @@
     android:gravity="center"
     android:background="#121212">
 
-    <TextView
-        android:id="@+id/appTitle"
+    <!-- Stylish App Title Container -->
+    <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="News App"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        android:textColor="#00BCD4"
         android:layout_marginBottom="40dp"
-        android:gravity="center" />
+        app:cardCornerRadius="15dp"
+        app:cardElevation="10dp"
+        app:cardBackgroundColor="#1E1E1E">
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <TextView
+                android:id="@+id/appTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="NEWS"
+                android:textSize="48sp"
+                android:textStyle="bold"
+                android:textColor="#00BCD4"
+                android:fontFamily="sans-serif-black"
+                android:letterSpacing="0.1"
+                android:shadowColor="#80000000"
+                android:shadowDx="2"
+                android:shadowDy="2"
+                android:shadowRadius="4"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="HEADLINES"
+                android:textSize="24sp"
+                android:textColor="#4DD0E1"
+                android:fontFamily="sans-serif-light"
+                android:letterSpacing="0.25"
+                android:layout_gravity="end"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@drawable/gradient_line"
+                android:layout_marginTop="8dp"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- Buttons with rounder background -->
     <Button
         android:id="@+id/buttonTechnology"
         android:layout_width="match_parent"
@@ -25,7 +63,7 @@
         android:text="Technology"
         android:textSize="18sp"
         android:textColor="#FFFFFF"
-        android:background="@color/cyan"
+        android:background="@drawable/button_background"
         android:layout_marginBottom="20dp"
         android:padding="12dp"
         android:elevation="4dp" />
@@ -37,7 +75,7 @@
         android:text="Sports"
         android:textSize="18sp"
         android:textColor="#FFFFFF"
-        android:background="@color/cyan"
+        android:background="@drawable/button_background"
         android:layout_marginBottom="20dp"
         android:padding="12dp"
         android:elevation="4dp" />
@@ -49,7 +87,7 @@
         android:text="Politics"
         android:textSize="18sp"
         android:textColor="#FFFFFF"
-        android:background="@color/cyan"
+        android:background="@drawable/button_background"
         android:layout_marginBottom="20dp"
         android:padding="12dp"
         android:elevation="4dp" />
@@ -61,7 +99,7 @@
         android:text="Entertainment"
         android:textSize="18sp"
         android:textColor="#FFFFFF"
-        android:background="@color/cyan"
+        android:background="@drawable/button_background"
         android:layout_marginBottom="20dp"
         android:padding="12dp"
         android:elevation="4dp" />
@@ -73,7 +111,7 @@
         android:text="Favorites"
         android:textSize="18sp"
         android:textColor="#FFFFFF"
-        android:background="@color/cyan"
+        android:background="@drawable/button_background"
         android:layout_marginBottom="20dp"
         android:padding="12dp"
         android:elevation="4dp" />

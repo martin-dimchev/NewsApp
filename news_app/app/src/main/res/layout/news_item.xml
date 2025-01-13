@@ -21,7 +21,8 @@
         android:text="News Title"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:layout_marginBottom="8dp"/>
+        android:layout_marginBottom="8dp"
+        android:textColor="#FFFFFF"/>
 
     <!-- Description of the news article -->
     <TextView
@@ -30,7 +31,7 @@
         android:layout_height="wrap_content"
         android:text="News description"
         android:textSize="14sp"
-        android:textColor="#666666"/>
+        android:textColor="#D9D9D9"/>
 
     <TextView
         android:id="@+id/newsPublishedAt"
@@ -38,7 +39,7 @@
         android:layout_height="wrap_content"
         android:text="Published on: Jan 12, 2025"
         android:textSize="12sp"
-        android:textColor="#999999"
+        android:textColor="#898989"
         android:layout_gravity="end|bottom"
         android:layout_marginTop="8dp"/>
 </LinearLayout>
